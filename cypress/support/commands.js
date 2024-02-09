@@ -23,3 +23,11 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('login', (username, password) => {
+    cy.visit('https://demo.netbox.dev/login/?next=/');
+    cy.get('#id_username').type(username);
+    cy.get('#id_password').type(password);
+    cy.get('button[type="submit"]').click();
+  });
+  
