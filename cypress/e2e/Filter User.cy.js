@@ -5,13 +5,14 @@ describe('User Account Filtering Workflow', () => {
   });
     //Test Case 1: Basic Search Functionality
   it('should return the correct user when searched by username', () => {
-    cy.intercept('GET', 'https://demo.netbox.dev/users/users/?q=LRZS').as('searchResults');
+    const searchQuery = 'alice';
+    cy.intercept('GET', 'https://demo.netbox.dev/users/users/?q=' + searchQuery).as('searchResults');
     cy.visit('https://demo.netbox.dev/users/users/'); 
     cy.get('#filters-form-tab').click({ force: true }); 
-    cy.get('#id_q').type('LRZS');
+    cy.get('#id_q').type(searchQuery);
     cy.get('button[type="submit"].btn.btn-sm.btn-primary.m-1').click();
     cy.wait('@searchResults');
-    cy.get('#object_list').contains('LRZS')
+    cy.get('#object_list').contains(searchQuery)
   });
 
     //Test Case 7: Reset Filter Functionality
